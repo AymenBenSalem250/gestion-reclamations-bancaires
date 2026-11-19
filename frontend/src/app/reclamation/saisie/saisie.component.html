@@ -1,0 +1,561 @@
+<!-- ============================================================
+     SAISIE DE RÉCLAMATION — Formulaire 4 Étapes
+     ============================================================ -->
+
+<!-- ── SUCCESS SCREEN ─────────────────────────────────────────── -->
+<div class="saisie-page" *ngIf="submitSuccess">
+  <app-page-header
+    title="Saisie de la réclamation"
+    subtitle="Réclamation enregistrée avec succès."
+    icon="edit-3">
+    <button type="button" class="btn btn-outline-light" (click)="goToConsultation()">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+      </svg>
+      Retour à la liste
+    </button>
+  </app-page-header>
+
+  <div class="success-card">
+    <div class="success-icon">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+    </div>
+    <h2>Réclamation soumise avec succès&nbsp;!</h2>
+    <p>Votre réclamation a été enregistrée. Veuillez conserver la référence ci-dessous.</p>
+    <div class="ref-badge">
+      <span class="ref-label">Référence générée</span>
+      <span class="ref-value">{{ generatedRef }}</span>
+    </div>
+    <div class="success-actions">
+      <button type="button" class="btn btn-primary" (click)="goToConsultation()">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+        </svg>
+        Voir la consultation
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="resetForm()">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 4v16m8-8H4"/>
+        </svg>
+        Nouvelle réclamation
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ── MAIN FORM (wizard) ──────────────────────────────────────── -->
+<div class="saisie-page" *ngIf="!submitSuccess">
+
+  <app-page-header
+    title="Saisie de la réclamation"
+    subtitle="Veuillez suivre les étapes pour soumettre une nouvelle réclamation."
+    icon="edit-3">
+    <button type="button" class="btn btn-outline-light" (click)="goToConsultation()">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+      </svg>
+      Retour à la liste
+    </button>
+  </app-page-header>
+
+  <!-- ── STEP INDICATOR ─────────────────────────────────────────── -->
+  <div class="wizard-stepper">
+    <ng-container *ngFor="let step of steps; let last = last">
+      <div class="step-item"
+           [class.active]="isStepActive(step.index)"
+           [class.completed]="isStepCompleted(step.index)"
+           [class.skipped]="step.index === 2 && isNonTSB && stepIndex > 1">
+        <div class="step-circle">
+          <svg *ngIf="isStepCompleted(step.index)" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+          </svg>
+          <span *ngIf="!isStepCompleted(step.index)">{{ step.index }}</span>
+        </div>
+        <span class="step-label">{{ step.label }}</span>
+      </div>
+      <div class="step-line" *ngIf="!last"
+           [class.line-completed]="isStepCompleted(step.index + 1) || (stepIndex > step.index)">
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- ================================================================
+       ÉTAPE 1 — Choix du type client
+       ================================================================ -->
+  <div class="step-card" *ngIf="stepIndex === 1">
+    <div class="step-title">
+      <span class="step-num">1/</span> Choix du type client
+    </div>
+
+    <div class="form-grid-2">
+      <!-- Client TSB ? -->
+      <div class="form-group">
+        <label class="form-label required">Client TSB ?</label>
+        <select class="form-select" [(ngModel)]="formData.clientType" (ngModelChange)="onClientTypeChange()" id="clientType">
+          <option value="" disabled selected>Sélectionnez le type</option>
+          <option value="TSB">Client TSB</option>
+          <option value="NON_TSB">Client Non-TSB</option>
+        </select>
+      </div>
+
+      <!-- Type de client (nature) -->
+      <div class="form-group" *ngIf="formData.clientType === 'NON_TSB'">
+        <label class="form-label required">Type de client</label>
+        <select class="form-select" [(ngModel)]="formData.natureId" id="natureClient">
+          <option [ngValue]="null" disabled>Sélectionnez un type de client</option>
+          <option *ngFor="let n of natures" [ngValue]="n.id">{{ n.libNat }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="step-footer step-footer-right">
+      <button type="button" class="btn btn-primary"
+              [disabled]="!isStep1Valid"
+              (click)="next()">
+        Suivant
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       ÉTAPE 2 — Recherche du client (TSB uniquement)
+       ================================================================ -->
+  <div class="step-card" *ngIf="stepIndex === 2">
+    <div class="step-title">
+      <span class="step-num">2/</span> Recherche d'un client
+    </div>
+
+    <!-- Search bar -->
+    <div class="search-row">
+      <select class="form-select search-type-select" [(ngModel)]="formData.searchType" id="searchType">
+        <option value="compte">Par numéro de compte</option>
+        <option value="code">Par code client</option>
+      </select>
+      <div class="search-input-wrap">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input type="text" class="form-input search-input"
+               [(ngModel)]="formData.searchQuery"
+               placeholder="Rechercher..."
+               id="searchQuery"
+               (keyup.enter)="searchClient()" />
+      </div>
+      <button type="button" class="btn btn-primary" (click)="searchClient()" [disabled]="searching">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        {{ searching ? 'Recherche...' : 'Rechercher' }}
+      </button>
+    </div>
+
+    <!-- Error -->
+    <div class="alert-error" *ngIf="searchError">{{ searchError }}</div>
+
+    <!-- Results table -->
+    <div class="table-wrap" *ngIf="clientResults.length > 0">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Code Client</th>
+            <th>Agence</th>
+            <th>Libellé Client</th>
+            <th>Numéro de compte</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let client of clientResults"
+              [class.selected-row]="formData.selectedClient?.codeClt  === client.codeClt ">
+            <td>{{ client.codeClt  }}</td>
+            <td>{{ client.ugClt  }}</td>
+            <td>{{ client.libCpt  }}</td>
+            <td>{{ client.numCpt  }}</td>
+            <td>
+              <button type="button" class="btn btn-choose"
+                      [class.btn-chosen]="formData.selectedClient?.codeClt  === client.codeClt "
+                      (click)="chooseClient(client)">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M5 13l4 4L19 7"/>
+                </svg>
+                {{ formData.selectedClient?.codeClt  === client.codeClt  ? 'Sélectionné' : 'Choisir' }}
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Selected client badge -->
+    <div class="client-selected-badge" *ngIf="formData.selectedClient">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+      Client sélectionné&nbsp;: <strong>{{ formData.selectedClient.libelleClient }}</strong>
+      &mdash; {{ formData.selectedClient.numeroCompte }}
+    </div>
+
+    <div class="step-footer step-footer-split">
+      <button type="button" class="btn btn-secondary" (click)="prev()">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+        Précédent
+      </button>
+      <button type="button" class="btn btn-primary"
+              [disabled]="!isStep2Valid"
+              (click)="next()">
+        Suivant
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       ÉTAPE 3 — Collecte d'informations
+       ================================================================ -->
+  <div class="step-card" *ngIf="stepIndex === 3">
+    <div class="step-title">
+      <span class="step-num">3/</span> Collecte d'informations
+    </div>
+
+    <!-- ── CAS CLIENT TSB ── -->
+    <ng-container *ngIf="isTSB">
+      <div class="section-subtitle">Informations client (lecture seule)</div>
+      <div class="form-grid-4">
+        <div class="form-group">
+          <label class="form-label">Code client</label>
+          <input type="text" class="form-input readonly-input" [value]="formData.codeClient" readonly />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Agence</label>
+          <input type="text" class="form-input readonly-input" [value]="formData.agence" readonly />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Libellé client</label>
+          <input type="text" class="form-input readonly-input" [value]="formData.libelleClient" readonly />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Numéro de compte</label>
+          <input type="text" class="form-input readonly-input" [value]="formData.numeroCompte" readonly />
+        </div>
+      </div>
+
+      <div class="section-subtitle">Coordonnées</div>
+      <div class="form-grid-3">
+        <div class="form-group">
+          <label class="form-label">Téléphone</label>
+          <input type="tel" class="form-input" [(ngModel)]="formData.telephone"
+                 placeholder="+216 XX XXX XXX" id="telephone" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">E-mail</label>
+          <input type="email" class="form-input" [(ngModel)]="formData.email"
+                 placeholder="exemple@domaine.com" id="email" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">GSM</label>
+          <input type="tel" class="form-input" [(ngModel)]="formData.gsm"
+                 placeholder="+216 XX XXX XXX" id="gsm" />
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- ── CAS CLIENT NON-TSB ── -->
+    <ng-container *ngIf="isNonTSB">
+      <div class="form-grid-2">
+        <!-- Nature réclamant -->
+        <div class="form-group">
+          <label class="form-label required">Nature réclamant</label>
+          <select class="form-select" [(ngModel)]="formData.natureId" id="natureClt">
+            <option [ngValue]="null" disabled>Sélectionnez la nature</option>
+            <option *ngFor="let n of natures" [ngValue]="n.id">{{ n.libNat }}</option>
+          </select>
+        </div>
+        <!-- Nom -->
+        <div class="form-group">
+          <label class="form-label required">Nom du réclamant</label>
+          <input type="text" class="form-input" [(ngModel)]="formData.nom"
+                 placeholder="Saisissez le nom" id="nom" />
+        </div>
+        <!-- Prénom -->
+        <div class="form-group">
+          <label class="form-label">Prénom du réclamant</label>
+          <input type="text" class="form-input" [(ngModel)]="formData.prenom"
+                 placeholder="Saisissez le prénom" id="prenom" />
+        </div>
+        <!-- Raison sociale (entreprise / association) -->
+        <div class="form-group" *ngIf="isEntreprise">
+          <label class="form-label">Raison sociale</label>
+          <input type="text" class="form-input" [(ngModel)]="formData.raisonSociale"
+                 placeholder="Saisissez la raison sociale" id="raisonSociale" />
+        </div>
+        <!-- CIN / Matricule fiscal -->
+        <div class="form-group">
+          <label class="form-label">CIN / Matricule fiscal</label>
+          <input type="text" class="form-input" [class.input-error]="!!cinError"
+                 [(ngModel)]="formData.cinOuMatricule"
+                 placeholder="8 chiffres" id="cinOuMatricule" maxlength="8" />
+          <span class="field-error" *ngIf="cinError">{{ cinError }}</span>
+        </div>
+        <!-- Téléphone -->
+        <div class="form-group">
+          <label class="form-label required">Téléphone</label>
+          <input type="tel" class="form-input" [class.input-error]="formData.telephone && !!phoneError"
+                 [(ngModel)]="formData.telephone"
+                 placeholder="8 chiffres" id="telephoneNonTSB" maxlength="8" />
+          <span class="field-error" *ngIf="formData.telephone && phoneError">{{ phoneError }}</span>
+        </div>
+        <!-- Email -->
+        <div class="form-group">
+          <label class="form-label">E-mail</label>
+          <input type="email" class="form-input" [class.input-error]="!!emailError"
+                 [(ngModel)]="formData.email"
+                 placeholder="exemple@domaine.com" id="emailNonTSB" />
+          <span class="field-error" *ngIf="emailError">{{ emailError }}</span>
+        </div>
+        <!-- GSM -->
+        <div class="form-group">
+          <label class="form-label">GSM</label>
+          <input type="tel" class="form-input" [(ngModel)]="formData.gsm"
+                 placeholder="+216 XX XXX XXX" id="gsmNonTSB" />
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="step-footer step-footer-split">
+      <button type="button" class="btn btn-secondary" (click)="prev()">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+        Précédent
+      </button>
+      <button type="button" class="btn btn-primary"
+              [disabled]="!isStep3Valid"
+              (click)="next()">
+        Suivant
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       ÉTAPE 4 — Traitement de la réclamation
+       ================================================================ -->
+  <div class="step-card" *ngIf="stepIndex === 4">
+    <div class="step-title">
+      <span class="step-num">4/</span> Traitement de la réclamation
+    </div>
+
+    <div class="form-grid-2">
+      <!-- Canal de réception -->
+      <div class="form-group">
+        <label class="form-label required">Canal de réception</label>
+        <select class="form-select" [(ngModel)]="formData.canalId" id="canal">
+          <option [ngValue]="null" disabled>Sélectionnez le canal de réception</option>
+          <option *ngFor="let c of canals" [ngValue]="c.id">{{ c.libCan }}</option>
+        </select>
+      </div>
+
+      <!-- Objet de la réclamation -->
+      <div class="form-group">
+        <label class="form-label required">Objet de la réclamation</label>
+        <select class="form-select" [(ngModel)]="formData.objetId" id="objet">
+          <option [ngValue]="null" disabled>Sélectionnez l'objet</option>
+          <option *ngFor="let o of objets" [ngValue]="o.id">{{ o.libObj }}</option>
+        </select>
+      </div>
+
+      <!-- Type de notification -->
+      <div class="form-group">
+        <label class="form-label required">Mode de notification</label>
+        <div class="notification-toggle-group">
+          <label *ngFor="let nt of notificationTypes"
+                  class="notification-toggle"
+                  [class.active-email]="isNotificationSelected(nt.id) && nt.libelle.toUpperCase() === 'EMAIL'"
+                  [class.active-sms]="isNotificationSelected(nt.id) && nt.libelle.toUpperCase() === 'SMS'"
+                  [class.active-default]="isNotificationSelected(nt.id) && nt.libelle.toUpperCase() !== 'EMAIL' && nt.libelle.toUpperCase() !== 'SMS'">
+            <input type="checkbox"
+                   [checked]="isNotificationSelected(nt.id)"
+                   (change)="toggleNotification(nt.id)">
+            <span>{{ nt.libelle }}</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label class="form-label required">Description de la réclamation</label>
+      <textarea class="form-textarea" [(ngModel)]="formData.description"
+                rows="5"
+                placeholder="Décrivez votre réclamation (minimum 10 caractères)..."
+                id="description"></textarea>
+      <span class="field-hint" *ngIf="formData.description.length > 0">
+        {{ formData.description.trim().length }} caractère(s)
+        <span *ngIf="descriptionTooShort" class="field-error-inline"> — minimum 10 requis</span>
+      </span>
+    </div>
+
+    <!-- Submit error -->
+    <div class="alert-error" *ngIf="submitError">{{ submitError }}</div>
+
+    <div class="step-footer step-footer-split">
+      <button type="button" class="btn btn-secondary" (click)="prev()">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+        Précédent
+      </button>
+      <button type="button" class="btn btn-primary"
+              [disabled]="!isStep4Valid"
+              (click)="next()">
+        Suivant
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       ÉTAPE 5 — Vérification et confirmation
+       ================================================================ -->
+  <div class="step-card resume-card" *ngIf="stepIndex === 5">
+
+    <div class="step-title">
+      <span class="step-num">5/</span> Vérification et confirmation
+    </div>
+    <p class="step-subtitle">Veuillez vérifier les informations avant de confirmer la soumission.</p>
+
+    <!-- Section : Identité -->
+    <div class="resume-section">
+      <div class="resume-section-header">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+        </svg>
+        Identité du réclamant
+      </div>
+      <div class="resume-grid">
+        <div class="resume-item">
+          <span class="resume-label">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            Nom
+          </span>
+          <span class="resume-value">{{ isTSB ? formData.selectedClient?.nomClt || formData.libelleClient : formData.nom }}</span>
+        </div>
+        <div class="resume-item">
+          <span class="resume-label">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            Prénom
+          </span>
+          <span class="resume-value">{{ isTSB ? formData.selectedClient?.prenClt || '-' : formData.prenom || '-' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section : Réclamation -->
+    <div class="resume-section">
+      <div class="resume-section-header">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        Détails de la réclamation
+      </div>
+      <div class="resume-grid resume-grid-3">
+        <div class="resume-item">
+          <span class="resume-label">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5l4.586 4.586A2 2 0 0117 9v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z"/></svg>
+            Objet
+          </span>
+          <span class="resume-value">{{ selectedObjet }}</span>
+        </div>
+        <div class="resume-item">
+          <span class="resume-label">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+            Canal de réception
+          </span>
+          <span class="resume-value">{{ selectedCanal }}</span>
+        </div>
+        <div class="resume-item">
+          <span class="resume-label">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+            Type de notification
+          </span>
+          <span class="resume-value">
+            <span class="resume-notif-badge"
+                  [class.notif-sms]="selectedNotificationTypeLabels.toLowerCase().includes('sms')"
+                  [class.notif-email]="selectedNotificationTypeLabels.toLowerCase().includes('email')"
+                  [class.notif-none]="selectedNotificationTypeLabels === 'Aucun'">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path *ngIf="selectedNotificationTypeLabels.toLowerCase().includes('sms') && !selectedNotificationTypeLabels.toLowerCase().includes('email')" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+                <path *ngIf="selectedNotificationTypeLabels.toLowerCase().includes('email') && !selectedNotificationTypeLabels.toLowerCase().includes('sms')" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                <path *ngIf="selectedNotificationTypeLabels === 'Aucun'" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>
+                <path *ngIf="selectedNotificationTypeLabels.toLowerCase().includes('sms') && selectedNotificationTypeLabels.toLowerCase().includes('email')" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+              </svg>
+              {{ selectedNotificationTypeLabels }}
+            </span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section : Description -->
+    <div class="resume-section resume-desc-section">
+      <div class="resume-section-header">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h7"/>
+        </svg>
+        Description de la réclamation
+      </div>
+      <p class="resume-desc-text">{{ formData.description }}</p>
+    </div>
+
+    <!-- Submit error -->
+    <div class="alert-error" *ngIf="submitError">{{ submitError }}</div>
+
+    <div class="step-footer step-footer-split">
+      <button type="button" class="btn btn-secondary" (click)="prev()">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+        Précédent
+      </button>
+      <button type="button" class="btn btn-submit btn-submit-premium"
+              [disabled]="submitting"
+              (click)="submit()">
+        <svg *ngIf="!submitting" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <svg *ngIf="submitting" class="spin-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+        </svg>
+        {{ submitting ? 'Envoi en cours...' : 'Confirmer et Soumettre' }}
+      </button>
+    </div>
+  </div>
+
+</div>

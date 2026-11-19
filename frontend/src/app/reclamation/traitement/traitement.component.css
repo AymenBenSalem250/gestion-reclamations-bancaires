@@ -1,0 +1,129 @@
+/* ── DECISION BANNERS ──────────────────────────────────────────── */
+.decision-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1.5px solid;
+  margin-top: 4px;
+}
+
+.decision-favorable {
+  background: #f0fdf4;
+  color: #15803d;
+  border-color: #bbf7d0;
+}
+
+.decision-rejet {
+  background: #fff1f2;
+  color: #be123c;
+  border-color: #fecdd3;
+}
+
+.decision-complement {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border-color: #bfdbfe;
+}
+
+.decision-default {
+  background: #f8fafc;
+  color: #475569;
+  border-color: #e2e8f0;
+}
+
+.decision-note {
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+/* ── DECISION CHIP (step 3 summary) ──────────────────────────── */
+.decision-chip {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 700;
+  border: 1.5px solid;
+}
+
+/* ── CONFIRMATION SUMMARY ─────────────────────────────────────── */
+.confirmation-summary {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.summary-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.summary-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  min-width: 120px;
+  flex-shrink: 0;
+}
+
+.summary-value {
+  font-size: 14px;
+  color: #1e293b;
+  font-weight: 500;
+  flex: 1;
+}
+
+/* ── Banking-style discrete alerts ──────────────────────────────── */
+
+.alert-info-subtle {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-left: 4px solid #64748b;
+  border-radius: 8px;
+  padding: 14px 18px;
+  font-size: 13px;
+  color: #475569;
+}
+
+.alert-banking-subtle {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #fefce8;
+  border: 1px solid #fde047;
+  border-left: 4px solid #ca8a04;
+  border-radius: 8px;
+  padding: 13px 16px;
+  font-size: 13px;
+  color: #78350f;
+  margin-bottom: 16px;
+}
+
+.alert-access-denied {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f0f4ff;
+  border: 1px solid #c7d2fe;
+  border-left: 4px solid #4f46e5;
+  border-radius: 8px;
+  padding: 14px 18px;
+  font-size: 13px;
+  color: #3730a3;
+  font-weight: 500;
+}

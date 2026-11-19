@@ -1,0 +1,15 @@
+<div class="layout-wrapper">
+  <!-- Sidebar fixed to the left -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Main Content Area -->
+  <div class="main-container">
+    <!-- Navbar at the top -->
+    <app-navbar (menuToggle)="onMenuToggle()"></app-navbar>
+
+    <!-- Page Content Router Outlet -->
+    <main class="content-area">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

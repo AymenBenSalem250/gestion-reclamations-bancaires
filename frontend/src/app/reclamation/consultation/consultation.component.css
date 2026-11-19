@@ -1,0 +1,144 @@
+/* ── STATUS BADGES ─────────────────────────────────────────────── */
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ENCOURS → orange */
+.badge-encours {
+  background-color: #fff7ed;
+  color: #c2410c;
+  border: 1px solid #fed7aa;
+}
+
+/* TRAITE → vert */
+.badge-traite {
+  background-color: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+/* REJETE → rouge */
+.badge-rejete {
+  background-color: #fff1f2;
+  color: #be123c;
+  border: 1px solid #fecdd3;
+}
+
+/* COMPLEMENT → bleu */
+.badge-complement {
+  background-color: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+}
+
+/* DEFAULT (nouveau, etc.) */
+.badge-default {
+  background-color: #f8fafc;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+
+/* ── TREAT ACTION BUTTON ──────────────────────────────────────── */
+.action-btn.treat {
+  background: #FFE8D6 !important;
+  border: none;
+}
+
+.action-btn.treat svg {
+  color: #F77F00 !important;
+}
+
+.action-btn.treat:hover {
+  background: #F77F00 !important;
+}
+
+.action-btn.treat:hover svg {
+  color: #fff !important;
+}
+
+/* ── STATUT FILTER SELECT ─────────────────────────────────────── */
+.statut-filter-select {
+  padding: 9px 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #1e293b;
+  background: #ffffff;
+  outline: none;
+  cursor: pointer;
+  min-width: 180px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+  padding-right: 36px;
+}
+
+.statut-filter-select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* -- MODERN TREAT BUTTON ---------------------------------------- */
+.action-btn.treat.modern-treat-btn {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+  transition: all 0.2s ease-in-out;
+  width: auto;
+  height: auto;
+}
+
+.action-btn.treat.modern-treat-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
+}
+
+.action-btn.treat.modern-treat-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ── CHAT ACTION BUTTON — visible & circulaire ────────────────── */
+.action-btn.chat {
+  background: #2563eb;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
+  transition: all 0.2s ease;
+}
+
+.action-btn.chat svg {
+  color: #ffffff;
+  width: 16px;
+  height: 16px;
+}
+
+.action-btn.chat:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 14px rgba(37, 99, 235, 0.45);
+}
+
+.action-btn.chat:hover svg {
+  color: #ffffff;
+}

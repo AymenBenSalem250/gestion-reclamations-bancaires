@@ -1,0 +1,245 @@
+<aside class="sidebar">
+
+  <!-- Logo TSB Vertical -->
+  <div class="sidebar-logo-wrapper">
+    <div class="sidebar-logo">
+      <img src="assets/images/logo TSB vertical.png" alt="TSB Logo" class="tsb-logo-img fade-in-logo" />
+    </div>
+    <div class="sidebar-logo-separator"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="sidebar-nav">
+    <ul>
+
+      <!-- Dashboard -->
+      <li>
+        <a routerLink="/dashboard"
+           routerLinkActive="active"
+           [routerLinkActiveOptions]="{ exact: true }"
+           class="nav-link"
+           (click)="closeMobile()">
+          <span class="icon-container" aria-hidden="true">
+            <i class="pi pi-home"></i>
+          </span>
+          <span class="nav-label">Dashboard</span>
+        </a>
+      </li>
+
+      <!-- Paramétrage (ADMIN ONLY) -->
+      <li *ngIf="isAdmin()" class="nav-section-title">PARAMÉTRAGE</li>
+      <li *ngIf="isAdmin()" class="nav-group">
+        <button type="button"
+                class="nav-link nav-group-toggle"
+                (click)="toggleReferentiel()"
+                [class.active]="referentielExpanded"
+                [attr.aria-expanded]="referentielExpanded">
+
+          <span class="nav-group-left">
+            <span class="icon-container" aria-hidden="true">
+              <i class="pi pi-cog"></i>
+            </span>
+            <span class="nav-label">Paramétrage</span>
+          </span>
+
+          <span class="expand-icon" [class.open]="referentielExpanded" aria-hidden="true">
+            <i class="pi pi-chevron-down"></i>
+          </span>
+        </button>
+
+        <ul class="submenu" [class.open]="referentielExpanded">
+          <li>
+            <a routerLink="/parametre/nature-client"
+               routerLinkActive="active"
+               class="nav-link sub-link"
+               (click)="closeMobile()">
+              Nature de client
+            </a>
+          </li>
+          <li>
+            <a routerLink="/parametre/sort-reclamation"
+               routerLinkActive="active"
+               class="nav-link sub-link"
+               (click)="closeMobile()">
+              Sort de réclamation
+            </a>
+          </li>
+          <li>
+            <a routerLink="/parametre/canal-reception"
+               routerLinkActive="active"
+               class="nav-link sub-link"
+               (click)="closeMobile()">
+              Canal de réception
+            </a>
+          </li>
+          <li>
+            <a routerLink="/parametre/service-traitement"
+               routerLinkActive="active"
+               class="nav-link sub-link"
+               (click)="closeMobile()">
+              Service de traitement
+            </a>
+          </li>
+          <li>
+            <a routerLink="/parametre/objet-reclamation"
+               routerLinkActive="active"
+               class="nav-link sub-link"
+               (click)="closeMobile()">
+              Objet de réclamation
+            </a>
+          </li>
+          <li>
+            <a routerLink="/parametre/notification-type"
+               routerLinkActive="active"
+               class="nav-link sub-link"
+               (click)="closeMobile()">
+              Type de notification
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <!-- Gestion des Réclamations -->
+      <li class="nav-section-title">GESTION DES RÉCLAMATIONS</li>
+      <li class="nav-group">
+        <button type="button"
+                class="nav-link nav-group-toggle"
+                (click)="toggleReclamation()"
+                [class.active]="reclamationExpanded"
+                [attr.aria-expanded]="reclamationExpanded">
+
+          <span class="nav-group-left">
+            <span class="icon-container" aria-hidden="true">
+              <i class="pi pi-folder-open"></i>
+            </span>
+            <span class="nav-label">Réclamations</span>
+          </span>
+
+          <span class="expand-icon" [class.open]="reclamationExpanded" aria-hidden="true">
+            <i class="pi pi-chevron-down"></i>
+          </span>
+        </button>
+
+        <ul class="submenu" [class.open]="reclamationExpanded">
+          <li *ngIf="isAdmin()">
+            <a routerLink="/reclamation/saisie"
+               routerLinkActive="active"
+               class="nav-link sub-link"
+               (click)="closeMobile()">
+              Saisie
+            </a>
+          </li>
+          <li>
+            <a routerLink="/reclamation/modification"
+               routerLinkActive="active"
+               class="nav-link sub-link"
+               (click)="closeMobile()">
+              Modification
+            </a>
+          </li>
+          <li>
+            <a routerLink="/reclamation/traitement"
+               routerLinkActive="active"
+               class="nav-link sub-link"
+               (click)="closeMobile()">
+              Traitement
+            </a>
+          </li>
+          <li>
+            <a routerLink="/reclamation/consultation"
+               routerLinkActive="active"
+               class="nav-link sub-link"
+               (click)="closeMobile()">
+              Consultation
+            </a>
+          </li>
+          <li>
+            <a routerLink="/reclamation/messages"
+               routerLinkActive="active"
+               class="nav-link sub-link"
+               (click)="closeMobile()">
+              Messagerie
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <!-- Édition & Reporting (ADMIN ONLY) -->
+      <li *ngIf="isAdmin()" class="nav-section-title">ÉDITION &amp; REPORTING</li>
+      <li *ngIf="isAdmin()" class="nav-group">
+        <button type="button"
+                class="nav-link nav-group-toggle"
+                (click)="toggleReporting()"
+                [class.active]="reportingExpanded"
+                [attr.aria-expanded]="reportingExpanded">
+
+          <span class="nav-group-left">
+            <span class="icon-container" aria-hidden="true">
+              <i class="pi pi-chart-bar"></i>
+            </span>
+            <span class="nav-label">Reporting</span>
+          </span>
+
+          <span class="expand-icon" [class.open]="reportingExpanded" aria-hidden="true">
+            <i class="pi pi-chevron-down"></i>
+          </span>
+        </button>
+
+        <ul class="submenu" [class.open]="reportingExpanded">
+          <li>
+            <a routerLink="/reporting/xml"
+               routerLinkActive="active"
+               class="nav-link sub-link"
+               (click)="closeMobile()">
+              Reporting XML
+            </a>
+          </li>
+          <li>
+            <a routerLink="/reporting/etat"
+               routerLinkActive="active"
+               class="nav-link sub-link"
+               (click)="closeMobile()">
+              État des réclamations
+            </a>
+          </li>
+        </ul>
+      </li>
+
+    </ul>
+  </nav>
+
+  <!-- Footer -->
+  <div class="sidebar-footer">
+    <div class="user-card"
+         (click)="logout()"
+         title="Se déconnecter"
+         role="button"
+         tabindex="0"
+         (keydown.enter)="logout()"
+         (keydown.space)="logout(); $event.preventDefault()">
+
+      <div class="avatar" aria-hidden="true">
+        <i class="pi pi-user"></i>
+      </div>
+
+      <div class="user-info">
+        <div class="user-name">{{ roleLabel }}</div>
+        <div class="user-role">
+          <span class="role-dot"></span>
+          Connecté
+        </div>
+      </div>
+
+      <span class="logout-icon" aria-hidden="true">
+        <i class="pi pi-chevron-down"></i>
+      </span>
+    </div>
+  </div>
+
+</aside>
+
+<!-- Overlay mobile -->
+<div class="sidebar-overlay"
+     *ngIf="mobileOpen"
+     (click)="closeMobile()"
+     aria-hidden="true"></div>

@@ -1,0 +1,693 @@
+/* 
+=========================================================
+  TSB Corporate UI/UX - Design System & PrimeNG Overrides
+=========================================================
+*/
+
+:root {
+  /* TSB Color Palette (Light Mode defaults based on user variables) */
+  --bg-primary: #F3F6FA;
+  --bg-secondary: #0F172A; /* For sidebar mainly */
+  --text-primary: #1F2A3C;
+  --text-secondary: #64748B;
+  --border-color: #E2E8F0;
+  --card-bg: #FFFFFF;
+  --hover-bg: #E2E8F0;
+  --input-bg: #FFFFFF;
+  --button-primary-bg: #2563EB;
+  --button-primary-text: #FFFFFF;
+  --success-color: #21A366;
+  --danger-color: #E63946;
+
+  /* Legacy aliases (to maintain compatibility) */
+  --primary-color: var(--button-primary-bg);
+  --accent-color: var(--danger-color);
+  --background-color: var(--bg-primary);
+  --sidebar-bg: var(--bg-secondary);
+  --hover-color: var(--hover-bg);
+  --surface-color: var(--card-bg);
+
+  /* Layout & Design System */
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 16px;
+  --border-radius-xl: 20px;
+  
+  --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.08);
+  --shadow-premium: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.dark-mode {
+  --bg-primary: #0f172a;
+  --bg-secondary: #111827;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --border-color: #334155;
+  --card-bg: #1e293b;
+  --hover-bg: #1e3a8a;
+  --input-bg: #0f172a;
+  --button-primary-bg: #2563eb;
+  --button-primary-text: #f1f5f9;
+  --success-color: #22c55e;
+  --danger-color: #ef4444;
+
+  /* Legacy aliases */
+  --background-color: var(--bg-primary);
+  --surface-color: var(--card-bg);
+  --sidebar-bg: #0b1120;
+  --hover-color: var(--hover-bg);
+  --accent-color: var(--danger-color);
+  --primary-color: var(--button-primary-bg);
+
+  --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.4);
+  --shadow-premium: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+/* =========================================================
+   PrimeNG Overrides
+   ========================================================= */
+
+/* Buttons */
+.p-button {
+  border-radius: var(--border-radius-md) !important;
+  font-weight: 600 !important;
+  transition: var(--transition-smooth) !important;
+  border: none !important;
+}
+
+.p-button-primary, .p-button {
+  background: var(--primary-color) !important;
+  color: #ffffff !important;
+}
+
+.p-button-primary:hover, .p-button:hover {
+  background: var(--hover-color) !important;
+  transform: translateY(-1px);
+}
+
+.p-button-danger {
+  background: var(--accent-color) !important;
+}
+
+.p-button-danger:hover {
+  background: #A30E25 !important;
+  transform: translateY(-1px);
+}
+
+.p-button-success {
+  background: var(--success-color) !important;
+}
+
+.p-button.p-button-rounded {
+  border-radius: 50% !important;
+}
+
+/* DataTables (p-table) */
+.p-datatable {
+  background: var(--surface-color);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+.p-datatable .p-datatable-header {
+  background: var(--surface-color);
+  border-bottom: 1px solid var(--border-color);
+  padding: 1.5rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+  font-weight: 600;
+  padding: 1rem;
+  border: none !important;
+}
+
+.p-datatable .p-datatable-thead > tr > th:first-child {
+  border-top-left-radius: 0;
+}
+
+.p-datatable .p-datatable-thead > tr > th:last-child {
+  border-top-right-radius: 0;
+}
+
+.p-datatable .p-datatable-tbody > tr {
+  transition: var(--transition-smooth);
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color) !important;
+  color: var(--text-primary);
+}
+
+.p-datatable .p-datatable-tbody > tr:hover {
+  background-color: var(--hover-bg) !important;
+}
+
+/* Pagination */
+.p-paginator {
+  background: transparent !important;
+  border: none !important;
+  padding: 1rem !important;
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page.p-highlight {
+  background: var(--primary-color) !important;
+  color: white !important;
+  border-radius: 50%;
+}
+
+.p-paginator .p-paginator-pages .p-paginator-page {
+  border-radius: 50%;
+  transition: var(--transition-smooth);
+}
+
+/* Dialogs (p-dialog) */
+.p-dialog {
+  border-radius: var(--border-radius-xl) !important;
+  box-shadow: var(--shadow-premium) !important;
+  border: none !important;
+  overflow: hidden;
+  animation: dialogScaleFadeIn 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@keyframes dialogScaleFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.p-dialog .p-dialog-header {
+  background: var(--surface-color) !important;
+  border-bottom: 1px solid var(--border-color) !important;
+  padding: 1.5rem !important;
+  color: var(--primary-color) !important;
+  font-weight: 700;
+}
+
+.p-dialog .p-dialog-content {
+  padding: 2rem 1.5rem !important;
+}
+
+.p-dialog .p-dialog-footer {
+  border-top: 1px solid var(--border-color) !important;
+  padding: 1.25rem 1.5rem !important;
+  background: var(--surface-color) !important;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* Forms & Inputs */
+.p-inputtext, .p-dropdown, .p-calendar .p-inputtext {
+  border-radius: var(--border-radius-sm) !important;
+  border: 1px solid var(--border-color) !important;
+  padding: 0.75rem !important;
+  transition: var(--transition-smooth) !important;
+  box-shadow: none !important;
+  background: var(--input-bg) !important;
+  color: var(--text-primary) !important;
+}
+
+.p-inputtext:enabled:focus, .p-dropdown:not(.p-disabled).p-focus {
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 2px rgba(31, 47, 70, 0.2) !important;
+}
+
+.p-float-label input:focus ~ label, .p-float-label input.p-filled ~ label,
+.p-float-label textarea:focus ~ label, .p-float-label textarea.p-filled ~ label {
+  color: var(--primary-color) !important;
+  font-weight: 500;
+}
+
+/* Toast */
+.p-toast .p-toast-message {
+  border-radius: var(--border-radius-md) !important;
+  box-shadow: var(--shadow-premium) !important;
+  border: none !important;
+}
+
+.p-toast .p-toast-message.p-toast-message-success {
+  background: var(--success-color) !important;
+  color: white !important;
+}
+.p-toast .p-toast-message.p-toast-message-success .p-toast-message-icon,
+.p-toast .p-toast-message.p-toast-message-success .p-toast-icon-close {
+  color: white !important;
+}
+
+/* Overlay & Loader */
+.p-component-overlay {
+  background-color: rgba(23, 34, 48, 0.7) !important; /* Sombre léger */
+  backdrop-filter: blur(3px);
+}
+
+/* Skeleton */
+.p-skeleton {
+  background-color: rgba(229, 233, 242, 0.5) !important;
+}
+
+
+/* BOUTONS ACTIONS (Redesign Fintech) */
+.btn-add, .btn-primary, .p-button-primary { 
+  background: #2563EB !important; /* Luminous Blue */
+  border-color: #2563EB !important; 
+  color: white !important; 
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
+}
+.btn-add:hover, .btn-primary:hover, .p-button-primary:hover { 
+  background: #1D4ED8 !important; 
+  border-color: #1D4ED8 !important; 
+}
+.dark-mode .btn-add, .dark-mode .btn-primary, .dark-mode .p-button-primary {
+  background: #3B82F6 !important;
+  border-color: #3B82F6 !important;
+}
+.dark-mode .btn-add:hover, .dark-mode .btn-primary:hover, .dark-mode .p-button-primary:hover {
+  background: #2563EB !important;
+  border-color: #2563EB !important;
+}
+
+.btn-excel, .btn-export:nth-child(1) { 
+  background: #21A366 !important; /* Modern Green */
+  border-color: #21A366 !important; 
+  color: white !important; 
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
+}
+.btn-excel:hover, .btn-export:nth-child(1):hover { 
+  background: #1A7F4D !important; 
+  border-color: #1A7F4D !important; 
+}
+.dark-mode .btn-excel, .dark-mode .btn-export:nth-child(1) {
+  background: #22C55E !important;
+  border-color: #22C55E !important;
+}
+.dark-mode .btn-excel:hover, .dark-mode .btn-export:nth-child(1):hover {
+  background: #16A34A !important;
+  border-color: #16A34A !important;
+}
+
+.btn-pdf, .btn-export:nth-child(2) { 
+  background: #E63946 !important; /* Solid Red */
+  border-color: #E63946 !important; 
+  color: white !important; 
+  box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3) !important;
+}
+.btn-pdf:hover, .btn-export:nth-child(2):hover { 
+  background: #C1121F !important; 
+  border-color: #C1121F !important; 
+}
+.dark-mode .btn-pdf, .dark-mode .btn-export:nth-child(2) {
+  background: #EF4444 !important;
+  border-color: #EF4444 !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3) !important;
+}
+.dark-mode .btn-pdf:hover, .dark-mode .btn-export:nth-child(2):hover {
+  background: #DC2626 !important;
+  border-color: #DC2626 !important;
+}
+
+.btn-edit, .action-btn.edit { 
+  background: #E0ECFF !important; /* Light blue */
+  border-color: transparent !important; 
+  color: #2563EB !important; 
+}
+.btn-edit .pi, .action-btn.edit .pi, .action-btn.edit svg {
+  color: #2563EB !important;
+}
+.btn-edit:hover, .action-btn.edit:hover { 
+  background: #2563EB !important; 
+  border-color: #2563EB !important; 
+  color: white !important;
+}
+.btn-edit:hover .pi, .action-btn.edit:hover .pi, .action-btn.edit:hover svg {
+  color: white !important;
+}
+.dark-mode .btn-edit, .dark-mode .action-btn.edit {
+  background: #1E40AF !important;
+  color: white !important;
+}
+.dark-mode .btn-edit .pi, .dark-mode .action-btn.edit .pi, .dark-mode .action-btn.edit svg {
+  color: white !important;
+}
+.dark-mode .btn-edit:hover, .dark-mode .action-btn.edit:hover {
+  background: #2563EB !important;
+  color: white !important;
+}
+
+.btn-delete, .action-btn.delete { 
+  background: #FFE5E5 !important; /* Light red */
+  border-color: transparent !important; 
+  color: #E63946 !important; 
+}
+.btn-delete .pi, .action-btn.delete .pi, .action-btn.delete svg {
+  color: #E63946 !important;
+}
+.btn-delete:hover, .action-btn.delete:hover { 
+  background: #E63946 !important; 
+  border-color: #E63946 !important; 
+  color: white !important;
+}
+.btn-delete:hover .pi, .action-btn.delete:hover .pi, .action-btn.delete:hover svg {
+  color: white !important;
+}
+.dark-mode .btn-delete, .dark-mode .action-btn.delete {
+  background: #7F1D1D !important;
+  color: #FCA5A5 !important;
+}
+.dark-mode .btn-delete .pi, .dark-mode .action-btn.delete .pi, .dark-mode .action-btn.delete svg {
+  color: #FCA5A5 !important;
+}
+.dark-mode .btn-delete:hover, .dark-mode .action-btn.delete:hover {
+  background: #991B1B !important;
+  color: white !important;
+}
+
+/* Base button properties for the main buttons */
+.p-button, .btn {
+  border-radius: 14px !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08) !important;
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  border: none !important;
+  color: white !important;
+}
+
+.p-button:hover, .btn:hover, .action-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.12) !important;
+}
+
+/* Override PrimeIcons color inside the buttons so they stay white */
+.p-button .p-button-icon, .btn .pi, .action-btn .pi, .action-btn svg {
+  color: white !important;
+}
+
+
+/* -- BOUTON PRECEDENT AMELIORE ---------------------------------------- */
+.btn.btn-secondary.btn-prev {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn.btn-secondary.btn-prev:hover {
+  background: #eff6ff;
+  color: #2563eb;
+  border-color: #bfdbfe;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.1);
+}
+
+.btn.btn-secondary.btn-prev svg {
+  color: inherit;
+  opacity: 0.9;
+}
+
+/* FIX: S'assurer que le texte et les icônes des boutons clairs sont visibles */
+.btn.btn-secondary {
+  color: #475569 !important;
+}
+.btn.btn-secondary svg, .btn.btn-secondary .pi {
+  color: #475569 !important;
+}
+
+.btn.btn-choose {
+  color: #2563EB !important;
+}
+.btn.btn-choose svg, .btn.btn-choose .pi {
+  color: #2563EB !important;
+}
+.btn.btn-choose:hover {
+  color: #ffffff !important;
+}
+.btn.btn-choose:hover svg, .btn.btn-choose:hover .pi {
+  color: #ffffff !important;
+}
+.btn.btn-choose.btn-chosen {
+  color: #ffffff !important;
+}
+.btn.btn-choose.btn-chosen svg, .btn.btn-choose.btn-chosen .pi {
+  color: #ffffff !important;
+}
+
+/* =========================================================
+   DARK MODE BANCAIRE PROFESSIONNEL (.dark-mode)
+   ========================================================= */
+
+.dark-mode {
+  /* Variables globales du mode sombre */
+  --bg-main: #0B1120 !important;
+  --card-bg: #111827 !important;
+  --card-hover: #1F2937 !important;
+  --text-main: #F3F4F6 !important;
+  --text-muted: #9CA3AF !important;
+  --border-color: #1F2937 !important;
+  --input-bg: #1F2937 !important;
+  --input-border: #374151 !important;
+  --header-bg: #0F172A !important;
+}
+
+/* ── CONTENEURS & CARDS ── */
+.dark-mode .param-page {
+  background-color: var(--bg-main) !important;
+  color: var(--text-main) !important;
+  min-height: calc(100vh - 80px); /* Pour éviter le fond blanc en bas */
+  padding: 1px; /* Evite le margin collapse */
+}
+
+.dark-mode .param-card {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
+.dark-mode .param-toolbar,
+.dark-mode .param-footer {
+  background: var(--card-bg) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Header supérieur de page */
+.dark-mode .param-header {
+  background: linear-gradient(135deg, #111827 0%, #1F2937 100%) !important;
+  border: 1px solid var(--border-color) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
+}
+
+.dark-mode .param-header-text h1 {
+  color: #FFFFFF !important;
+}
+
+.dark-mode .param-header-text p {
+  color: var(--text-muted) !important;
+}
+
+/* ── TABLEAUX (Consultation & Paramétrage) ── */
+.dark-mode .param-table {
+  color: var(--text-main) !important;
+  background: var(--card-bg) !important;
+}
+
+.dark-mode .param-table thead th {
+  background: var(--header-bg) !important;
+  color: var(--text-muted) !important;
+  border-bottom: 2px solid var(--border-color) !important;
+}
+
+.dark-mode .param-table tbody td {
+  border-bottom: 1px solid var(--border-color) !important;
+  color: var(--text-main) !important;
+  background: var(--card-bg) !important;
+}
+
+.dark-mode .param-table tbody tr {
+  transition: background 0.2s ease !important;
+}
+
+.dark-mode .param-table tbody tr:hover td {
+  background: var(--card-hover) !important;
+}
+
+/* ── INPUTS, SELECTS & BARRE DE RECHERCHE ── */
+.dark-mode .search-box input,
+.dark-mode select.statut-filter-select,
+.dark-mode .param-toolbar select,
+.dark-mode .param-toolbar input {
+  background: var(--input-bg) !important;
+  border: 1px solid var(--input-border) !important;
+  color: var(--text-main) !important;
+}
+
+.dark-mode .search-box input::placeholder {
+  color: var(--text-muted) !important;
+}
+
+.dark-mode .search-box input:focus,
+.dark-mode select.statut-filter-select:focus {
+  border-color: #3B82F6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2) !important;
+  outline: none !important;
+}
+
+.dark-mode .search-box svg {
+  color: var(--text-muted) !important;
+}
+
+.dark-mode .btn-filter {
+  background: var(--input-bg) !important;
+  border-color: var(--input-border) !important;
+  color: var(--text-main) !important;
+}
+
+.dark-mode .btn-filter:hover {
+  background: #374151 !important;
+  border-color: #4B5563 !important;
+}
+
+/* ── BOUTONS D'ACTIONS (Tableaux) ── */
+.dark-mode .action-btn.edit,
+.dark-mode .action-btn.treat,
+.dark-mode .action-btn.chat,
+.dark-mode .btn-edit {
+  background: #1E3A8A !important;
+  color: #93C5FD !important;
+  border: 1px solid #1E40AF !important;
+}
+
+.dark-mode .action-btn.edit:hover,
+.dark-mode .action-btn.treat:hover,
+.dark-mode .action-btn.chat:hover,
+.dark-mode .btn-edit:hover {
+  background: #2563EB !important;
+  color: #FFFFFF !important;
+  border-color: #2563EB !important;
+}
+
+.dark-mode .action-btn.edit .pi, 
+.dark-mode .action-btn.edit svg,
+.dark-mode .action-btn.treat svg,
+.dark-mode .action-btn.chat svg,
+.dark-mode .btn-edit .pi, 
+.dark-mode .btn-edit svg {
+  color: #93C5FD !important;
+}
+
+.dark-mode .action-btn.edit:hover .pi, 
+.dark-mode .action-btn.edit:hover svg,
+.dark-mode .action-btn.treat:hover svg,
+.dark-mode .action-btn.chat:hover svg,
+.dark-mode .btn-edit:hover .pi, 
+.dark-mode .btn-edit:hover svg {
+  color: #FFFFFF !important;
+}
+
+.dark-mode .action-btn.delete,
+.dark-mode .btn-delete {
+  background: #7F1D1D !important;
+  color: #FCA5A5 !important;
+  border: 1px solid #991B1B !important;
+}
+
+.dark-mode .action-btn.delete:hover,
+.dark-mode .btn-delete:hover {
+  background: #DC2626 !important;
+  color: #FFFFFF !important;
+  border-color: #DC2626 !important;
+}
+
+.dark-mode .action-btn.delete .pi, 
+.dark-mode .action-btn.delete svg,
+.dark-mode .btn-delete .pi, 
+.dark-mode .btn-delete svg {
+  color: #FCA5A5 !important;
+}
+
+.dark-mode .action-btn.delete:hover .pi, 
+.dark-mode .action-btn.delete:hover svg,
+.dark-mode .btn-delete:hover .pi, 
+.dark-mode .btn-delete:hover svg {
+  color: #FFFFFF !important;
+}
+
+/* ── PAGINATION ── */
+.dark-mode .page-btn {
+  background: var(--input-bg) !important;
+  border: 1px solid var(--input-border) !important;
+  color: var(--text-main) !important;
+}
+
+.dark-mode .page-btn:hover:not(:disabled) {
+  background: #374151 !important;
+  border-color: #4B5563 !important;
+  color: #FFFFFF !important;
+}
+
+.dark-mode .page-btn.active {
+  background: #2563EB !important;
+  border-color: #2563EB !important;
+  color: #FFFFFF !important;
+}
+
+.dark-mode .param-footer-info {
+  color: var(--text-muted) !important;
+}
+
+/* ── BADGES STATUTS (Contraste amélioré) ── */
+.dark-mode .badge-encours,
+.dark-mode .status-badge.En.cours,
+.dark-mode span.badge:contains('En cours') {
+  background: #7C2D12 !important;
+  color: #FDBA74 !important;
+  border: 1px solid #9A3412 !important;
+}
+
+.dark-mode .badge-nouveau,
+.dark-mode .status-badge.Nouveau,
+.dark-mode span.badge:contains('Nouveau') {
+  background: #064E3B !important;
+  color: #6EE7B7 !important;
+  border: 1px solid #065F46 !important;
+}
+
+.dark-mode .badge-cloture,
+.dark-mode .status-badge.Clôturé {
+  background: #4C1D95 !important;
+  color: #C4B5FD !important;
+  border: 1px solid #5B21B6 !important;
+}
+
+.dark-mode .badge-default,
+.dark-mode .status-badge {
+  background: #1E3A8A !important;
+  color: #93C5FD !important;
+  border: 1px solid #1E40AF !important;
+}
+

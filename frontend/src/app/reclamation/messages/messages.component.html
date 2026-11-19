@@ -1,0 +1,292 @@
+<!-- ============================================================
+     MESSAGES — Page Chat Premium TSB
+     Header identique Modification/Traitement
+     Body : 2 colonnes Info + Chat
+     ============================================================ -->
+
+<div class="msg-page">
+
+  <!-- ══ HEADER (identique Modification / Traitement) ══════════════ -->
+  <app-page-header
+    [title]="'Réclamation ' + refRec"
+    subtitle="Messagerie instantanée"
+    icon="message-circle">
+    <!-- Bouton Retour -->
+    <button type="button" class="btn btn-outline-light" id="btnAnnulerHeader" (click)="goBack()">
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="20" height="20">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Retour à la liste
+    </button>
+  </app-page-header>
+
+  <!-- ══ BODY : 2 COLONNES ════════════════════════════════════════ -->
+  <div class="msg-body">
+
+    <!-- ── COLONNE GAUCHE : Informations ─────────────────────────── -->
+    <aside class="info-panel">
+      <div class="info-panel-header">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <span>Informations</span>
+      </div>
+
+      <!-- Skeleton loader -->
+      <div *ngIf="loadingReclamation" class="info-skeleton">
+        <div class="skel-row" *ngFor="let i of [1,2,3,4,5,6,7,8]">
+          <div class="skel-label"></div>
+          <div class="skel-value"></div>
+        </div>
+      </div>
+
+      <!-- Données réclamation -->
+      <ul *ngIf="!loadingReclamation && reclamation" class="info-list">
+        <li class="info-item">
+          <div class="info-icon-wrap">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/>
+            </svg>
+          </div>
+          <div class="info-content">
+            <span class="info-label">Référence</span>
+            <span class="info-value ref-value">{{ reclamation.refRec }}</span>
+          </div>
+        </li>
+        <li class="info-item">
+          <div class="info-icon-wrap">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+          </div>
+          <div class="info-content">
+            <span class="info-label">Client</span>
+            <span class="info-value">{{ reclamation.clientDisplay }}</span>
+          </div>
+        </li>
+        <li class="info-item">
+          <div class="info-icon-wrap">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+            </svg>
+          </div>
+          <div class="info-content">
+            <span class="info-label">Nature</span>
+            <span class="info-value">{{ reclamation.natureDisplay }}</span>
+          </div>
+        </li>
+        <li class="info-item">
+          <div class="info-icon-wrap">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/>
+            </svg>
+          </div>
+          <div class="info-content">
+            <span class="info-label">Canal</span>
+            <span class="info-value">{{ reclamation.canalDisplay }}</span>
+          </div>
+        </li>
+        <li class="info-item">
+          <div class="info-icon-wrap">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+            </svg>
+          </div>
+          <div class="info-content">
+            <span class="info-label">Objet</span>
+            <span class="info-value">{{ reclamation.objetDisplay }}</span>
+          </div>
+        </li>
+        <li class="info-item">
+          <div class="info-icon-wrap">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <div class="info-content">
+            <span class="info-label">Statut</span>
+            <span
+              class="info-badge"
+              [ngClass]="getStatutBadgeClass(reclamation.statutDisplay)">
+              {{ reclamation.statutDisplay }}
+            </span>
+          </div>
+        </li>
+        <li class="info-item">
+          <div class="info-icon-wrap">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+          </div>
+          <div class="info-content">
+            <span class="info-label">Date création</span>
+            <span class="info-value">{{ reclamation.datRec | date:'dd/MM/yyyy' }}</span>
+          </div>
+        </li>
+      </ul>
+
+      <!-- Si pas de données et pas en chargement -->
+      <div *ngIf="!loadingReclamation && !reclamation" class="info-empty">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        <span>Informations indisponibles</span>
+      </div>
+    </aside>
+
+    <!-- ── COLONNE DROITE : Messages ──────────────────────────────── -->
+    <section class="chat-panel">
+      <!-- En-tête chat panel -->
+      <div class="chat-panel-header">
+        <div class="chat-panel-title">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8 a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72 C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+          <span>Conversation</span>
+          <span *ngIf="messages.length > 0" class="msg-count-badge">{{ messages.length }}</span>
+        </div>
+        <div class="chat-panel-actions">
+          <button type="button" class="btn-refresh" title="Rechercher"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg></button>
+          <button type="button" class="btn-refresh" title="Utilisateur"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg></button>
+          <button type="button" class="btn-refresh" (click)="loadMessages()" [disabled]="loading" title="Actualiser"><svg [class.spin-icon]="loading" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg></button>
+        </div>
+      </div>
+
+      <div class="chat-loading" *ngIf="loading">
+        <div class="loader-ring"></div>
+        <span>Chargement de la conversation...</span>
+      </div>
+
+      <div class="chat-load-error" *ngIf="!loading && error && messages.length === 0">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span>{{ error }}</span>
+        <button type="button" class="btn-retry" (click)="loadMessages()">Réessayer</button>
+      </div>
+
+      <div class="messages-scroll" #messagesScroll *ngIf="!loading" (click)="selectedMessageId = undefined">
+
+        <div class="messages-empty" *ngIf="messages.length === 0 && !error">
+          <div class="empty-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8 a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72 C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg></div>
+          <p>La conversation n'a pas encore débuté.</p>
+        </div>
+
+        <div class="messages-container">
+          <div class="date-separator" *ngIf="messages.length > 0">
+            <div class="line"></div>
+            <span>Aujourd'hui</span>
+            <div class="line"></div>
+          </div>
+
+          <ng-container *ngFor="let msg of messages; let i = index">
+            <div class="date-separator-inline" *ngIf="i > 0 && i % 3 === 0">
+               <div class="line"></div>
+               <span class="inline-time">{{ formatDate(msg.createdAt) | slice:11:16 }}</span>
+               <div class="line"></div>
+            </div>
+
+            <!-- CLIENT -->
+            <div class="message-row row-client" *ngIf="!isAdminMessage(msg)">
+              <div class="avatar avatar-client" [title]="msg.userFullName"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg></div>
+              <div class="bubble-wrap">
+                <div class="bubble bubble-client" (click)="toggleTimestamp(msg, $event)" style="cursor:pointer">
+                  <p>{{ msg.message }}</p>
+                  
+                  <div class="msg-attachment" *ngIf="msg.fileName">
+                    <div class="attachment-card" (click)="$event.stopPropagation(); loadFile(msg, true)">
+                      <div class="att-icon-box pdf-box" *ngIf="msg.fileType?.includes('pdf')"><svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/></svg></div>
+                      <img *ngIf="msg.fileType?.includes('image') && fileUrls[msg.fileName]" [src]="fileUrls[msg.fileName]" class="att-icon img" alt="img" />
+                      <div class="att-details"><span class="att-name">{{ msg.fileName.split('_').slice(1).join('_') || msg.fileName }}</span><span class="att-size">{{ formatFileSize(msg.fileSize) }}</span></div>
+                      <div class="att-download"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg></div>
+                    </div>
+                  </div>
+                  
+                  <div class="msg-footer fade-in-time" *ngIf="selectedMessageId === msg.id">
+                    <span class="timestamp">{{ formatDate(msg.createdAt) | slice:11:16 }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ADMIN -->
+            <div class="message-row row-admin" *ngIf="isAdminMessage(msg)">
+              <div class="bubble-wrap bubble-wrap-right">
+                <div class="bubble bubble-admin" (click)="toggleTimestamp(msg, $event)" style="cursor:pointer">
+                  <p>{{ msg.message }}</p>
+                  
+                  <div class="msg-attachment admin-attachment" *ngIf="msg.fileName">
+                    <div class="attachment-card" (click)="$event.stopPropagation(); loadFile(msg, true)">
+                      <div class="att-icon-box pdf-box" *ngIf="msg.fileType?.includes('pdf')"><svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/></svg></div>
+                      <img *ngIf="msg.fileType?.includes('image') && fileUrls[msg.fileName]" [src]="fileUrls[msg.fileName]" class="att-icon img" alt="img" />
+                      <div class="att-details"><span class="att-name">{{ msg.fileName.split('_').slice(1).join('_') || msg.fileName }}</span><span class="att-size">{{ formatFileSize(msg.fileSize) }}</span></div>
+                      <div class="att-download"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg></div>
+                    </div>
+                  </div>
+                  
+                  <div class="msg-footer fade-in-time" *ngIf="selectedMessageId === msg.id">
+                    <span class="timestamp">{{ formatDate(msg.createdAt) | slice:11:16 }}</span>
+                    <span class="double-check"><svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 4.5L6.5 13.5L2.5 9.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 4.5L8.5 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                  </div>
+                </div>
+              </div>
+              <div class="avatar avatar-admin" [title]="msg.userFullName">
+                <span class="tsb-logo-text">TSB</span>
+                <span class="online-dot"></span>
+              </div>
+            </div>
+
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="chat-input-zone" *ngIf="!loading" [formGroup]="chatForm">
+        
+        <div class="send-error-bar" *ngIf="sendError || fileError">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          {{ sendError || fileError }}
+        </div>
+
+        <input type="file" #fileInput hidden (change)="onFileSelected($event)" accept="image/*,application/pdf">
+
+        <div class="chat-file-preview" *ngIf="selectedFile">
+          <div class="preview-info">
+            <div class="preview-icon-box"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg></div>
+            <span class="preview-name">{{ selectedFile.name }} ({{ formatFileSize(selectedFile.size) }})</span>
+          </div>
+          <button type="button" class="btn-remove-file" (click)="removeFile()" title="Retirer">✖</button>
+        </div>
+
+        <div class="emoji-picker" *ngIf="showEmojiPicker">
+          <span class="emoji-item" *ngFor="let em of emojis" (click)="addEmoji(em)">{{ em }}</span>
+        </div>
+
+        <div class="input-bar-premium">
+          <div class="input-actions-left">
+            <button type="button" class="btn-icon-premium" (click)="toggleEmojiPicker()" title="Emoji"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></button>
+            <button type="button" class="btn-icon-premium" (click)="triggerFileInput()" title="Joindre"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg></button>
+          </div>
+          
+          <input 
+            type="text" 
+            class="input-premium" 
+            formControlName="message" 
+            [maxlength]="maxLength" 
+            placeholder="Écrire votre message..."
+            (keydown)="onKeydown($event)"
+            [disabled]="sending">
+            
+          <div class="input-actions-right">
+             <button *ngIf="sending" class="btn-send-premium disabled"><svg class="spin-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg></button>
+             <button *ngIf="!sending" type="button" class="btn-send-premium" (click)="sendMessage()" [disabled]="!canSend"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style="margin-left: -2px; margin-top: 1px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

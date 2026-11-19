@@ -1,0 +1,20 @@
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Service, Page } from '../../core/models';
+
+@Injectable({ providedIn: 'root' })
+export class ServiceTraitementService {
+  private readonly base = 'http://localhost:8081/api/reference/services';
+
+  constructor(private http: HttpClient) {}
+
+  getAll(page: number = 0, size: number = 10, search: string = ''): Observable<Page<Service>> {
+    let params = new HttpParams().set('page', page.toString()).set('size', size.toString());
+    if (search) params = params.set('search', search);
+    return this.http.get<Page<Service>>(this.base, { params });
+  }
+  create(data: Service): Observable<Service> { return this.http.post<Service>(this.base, data); }
+  update(codSer: string, data: Service): Observable<Service> { return this.http.put<Service>(`${this.base}/${codSer}`, data); }
+  delete(codSer: string): Observable<void> { return this.http.delete<void>(`${this.base}/${codSer}`); }
+}

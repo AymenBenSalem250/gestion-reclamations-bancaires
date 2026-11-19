@@ -1,0 +1,129 @@
+/* ================================================================
+   HEADER SOMBRE — IDENTIQUE À SAISIE / TRAITEMENT / CONSULTATION
+   ================================================================ */
+   
+.sla-header {
+  padding: 28px 32px;
+  background: linear-gradient(135deg, #1F2A3C 0%, #2F3E55 100%);
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  animation: fadeInUp 0.4s ease both;
+  margin-bottom: 24px;
+}
+
+.sla-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.sla-header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 1;
+}
+
+/* Icon wrapper dans le header */
+.sla-header-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: rgba(37, 99, 235, 0.25);
+  border: 1px solid rgba(37, 99, 235, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  svg {
+    width: 26px;
+    height: 26px;
+    color: #60a5fa;
+  }
+}
+
+.sla-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sla-header-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+
+  h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.3px;
+  }
+}
+
+.sla-header-text > p {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 400;
+}
+
+/* Badge bleu */
+.sla-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 9999px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.sla-badge-admin, .sla-badge {
+  background: linear-gradient(135deg, #2563EB, #1d4ed8);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
+}
+
+.sla-badge-user {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.35);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* ================================================================
+   RESPONSIVE
+   ================================================================ */
+@media (max-width: 900px) {
+  .sla-header {
+    padding: 22px 20px;
+  }
+  .sla-header-icon { display: none; }
+}
+
+@media (max-width: 640px) {
+  .sla-header {
+    padding: 18px 16px;
+    border-radius: 16px;
+  }
+  .sla-header-title-row h1 { font-size: 18px; }
+}

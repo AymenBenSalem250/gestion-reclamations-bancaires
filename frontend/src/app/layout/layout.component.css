@@ -1,0 +1,28 @@
+.layout-wrapper {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #F4F6F9; /* TSB Global Background */
+}
+
+.main-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: 250px; /* Sidebar width */
+  min-height: 100vh;
+  transition: margin-left 0.3s ease;
+}
+
+.content-area {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .main-container {
+    margin-left: 0;
+  }
+}

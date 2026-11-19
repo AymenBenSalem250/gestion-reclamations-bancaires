@@ -1,0 +1,442 @@
+/* =========================================================
+   LOGIN PAGE - TSB@DIRECT
+   Exact match with the provided banking mockup.
+   ========================================================= */
+
+/* Import Google Font Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.auth-layout {
+  display: flex;
+  width: 100vw;
+  min-height: 100vh;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  background: #edf2f7;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ===========================================================
+   COLONNE GAUCHE — 55% — Image + Texte
+   =========================================================== */
+.auth-left {
+  position: relative;
+  width: 55%;
+  min-height: 100vh;
+  overflow: hidden;
+
+  /* Image bâtiment TSB visible directement */
+  background-image: url('../../../assets/images/Siège_tsb.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+/* Overlay dégradé : blanc opaque à gauche, transparent à droite */
+.auth-left-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(237, 242, 247, 0.98) 0%,
+    rgba(237, 242, 247, 0.92) 20%,
+    rgba(237, 242, 247, 0.75) 40%,
+    rgba(237, 242, 247, 0.40) 65%,
+    rgba(237, 242, 247, 0.10) 85%,
+    rgba(237, 242, 247, 0.00) 100%
+  );
+  z-index: 1;
+}
+
+/* Contenu texte + logo positionné par-dessus l'overlay */
+.auth-left-content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 8%;
+}
+
+/* Logo TSB Vertical — haut gauche */
+.logo-container {
+  position: absolute;
+  top: 48px;
+  left: 8%;
+}
+.tsb-logo-img {
+  width: 200px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Texte de bienvenue */
+.welcome-section {
+  padding-top: 80px; /* Pour éviter le chevauchement avec le logo absolu */
+}
+.welcome-section h2 {
+  font-size: 36px;
+  font-weight: 500;
+  color: #1C2B39;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+.welcome-section h1 {
+  font-size: 68px;
+  font-weight: 900;
+  color: #1C2B39;
+  letter-spacing: -2px;
+  line-height: 1;
+  margin-bottom: 24px;
+}
+.welcome-section h1 span {
+  color: #D71920;
+}
+.welcome-section p {
+  font-size: 16px;
+  color: #475569;
+  line-height: 1.7;
+  max-width: 400px;
+  margin-bottom: 28px;
+}
+.red-line {
+  width: 40px;
+  height: 4px;
+  background: #D71920;
+  border-radius: 2px;
+}
+
+/* ===========================================================
+   COLONNE DROITE — 45% — Formulaire centré
+   =========================================================== */
+.auth-right {
+  width: 45%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: transparent;
+  padding-bottom: 52px; /* Espace footer */
+}
+
+/* Sélecteur de langue */
+.language-selector {
+  position: fixed;
+  top: 28px;
+  right: 36px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  background: #ffffff;
+  border: 1px solid #dde3ed;
+  border-radius: 30px;
+  font-size: 14px;
+  color: #475569;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  z-index: 50;
+}
+
+/* Carte de connexion */
+.login-card {
+  width: 460px;
+  max-width: calc(100% - 48px);
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 44px 44px 40px;
+  box-shadow:
+    0 4px 6px rgba(0,0,0,0.04),
+    0 20px 40px rgba(0,0,0,0.08);
+  position: relative;
+  z-index: 10;
+}
+
+/* Header "Connexion" */
+.login-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+.header-icon {
+  font-size: 26px;
+  color: #D71920;
+}
+.login-header h3 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+}
+
+/* Champs de formulaire */
+.form-group {
+  margin-bottom: 20px;
+}
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 8px;
+}
+
+/* Input texte natif */
+.input-wrapper {
+  position: relative;
+}
+.input-wrapper .input-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  font-size: 16px;
+  z-index: 2;
+  pointer-events: none;
+}
+.input-wrapper input {
+  display: block;
+  width: 100%;
+  height: 52px;
+  padding: 0 18px 0 46px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 15px;
+  font-family: inherit;
+  color: #111827;
+  background: #f8fafc;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+.input-wrapper input:focus {
+  outline: none;
+  background: #ffffff;
+  border-color: #D71920;
+  box-shadow: 0 0 0 3px rgba(215,25,32,0.10);
+}
+.input-wrapper input::placeholder {
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+/* Input mot de passe (PrimeNG p-password) */
+.input-wrapper-prime {
+  position: relative;
+}
+.input-icon-lock {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  font-size: 16px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Surcharge PrimeNG p-password */
+::ng-deep .p-password {
+  width: 100%;
+  display: block;
+}
+::ng-deep .prime-input-custom {
+  display: block !important;
+  width: 100% !important;
+  height: 52px !important;
+  padding-left: 46px !important;
+  padding-right: 46px !important;
+  border: 1.5px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+  font-size: 15px !important;
+  font-family: inherit !important;
+  color: #111827 !important;
+  background: #f8fafc !important;
+  box-shadow: none !important;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s !important;
+}
+::ng-deep .prime-input-custom:focus {
+  outline: none !important;
+  background: #ffffff !important;
+  border-color: #D71920 !important;
+  box-shadow: 0 0 0 3px rgba(215,25,32,0.10) !important;
+}
+::ng-deep .prime-input-custom::placeholder {
+  color: #9ca3af !important;
+  font-size: 14px !important;
+}
+::ng-deep .p-password-toggle-mask-icon,
+::ng-deep .p-icon {
+  color: #9ca3af !important;
+  right: 14px !important;
+}
+
+/* Erreurs */
+.error-msg {
+  display: block;
+  color: #dc2626;
+  font-size: 12px;
+  margin-top: 5px;
+}
+.error-global {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+/* Bouton Se connecter */
+.btn-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 56px;
+  margin-top: 8px;
+  background: #D71920;
+  color: #ffffff;
+  border: none;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.18s ease, box-shadow 0.25s ease;
+  box-shadow: 0 4px 20px rgba(215,25,32,0.30);
+}
+.btn-submit:hover:not(:disabled) {
+  background: #C4121A;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(215,25,32,0.35);
+}
+.btn-submit:active:not(:disabled) {
+  transform: translateY(0);
+}
+.btn-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Séparateur "ou" */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 22px 0;
+  color: #9ca3af;
+  font-size: 13px;
+}
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Bouton Sécurité & Conseils */
+.btn-secondary-outline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 52px;
+  background: #ffffff;
+  color: #374151;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-secondary-outline:hover {
+  background: #f9fafb;
+  border-color: #cbd5e1;
+  color: #111827;
+}
+.btn-secondary-outline i {
+  font-size: 18px;
+  color: #6b7280;
+}
+
+/* Vague rouge en bas à droite */
+.red-wave-bottom {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 260px;
+  height: 160px;
+  background: #D71920;
+  border-top-left-radius: 100%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* ===========================================================
+   FOOTER — Bande sombre en bas
+   =========================================================== */
+.auth-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #1C2B39;
+  color: #94a3b8;
+  padding: 14px 48px;
+  z-index: 20;
+}
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.copyright { color: #64748b; }
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.auth-footer a {
+  color: #94a3b8;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.auth-footer a:hover { color: #ffffff; }
+.auth-footer .sep { margin: 0 14px; color: #334155; }
+
+/* ===========================================================
+   RESPONSIVE — Mobile
+   =========================================================== */
+@media (max-width: 900px) {
+  .auth-left { display: none; }
+  .auth-right {
+    width: 100%;
+    min-height: 100vh;
+    padding: 60px 24px 80px;
+    background: #edf2f7;
+  }
+  .login-card { width: 100%; max-width: 440px; padding: 36px 28px; }
+  .red-wave-bottom { width: 180px; height: 110px; }
+  .language-selector { top: 16px; right: 16px; }
+  .auth-footer { padding: 12px 24px; }
+  .footer-content { flex-direction: column; text-align: center; }
+}
